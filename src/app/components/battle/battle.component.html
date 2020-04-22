@@ -1,0 +1,17 @@
+ <p></p>
+ <form class="form-inline" action="/action_page.php">
+    <input #username
+      class="form-control mr-sm-2" 
+      type="text" 
+      placeholder="Search">
+    <button 
+      class="btn btn-success" 
+      type="submit"
+      (click)="onBattle(username.value); username.value='' ">
+    Search</button>
+  </form>
+  <p></p>
+
+  <p *ngIf="cauta">
+    <app-profile></app-profile>
+  </p>
