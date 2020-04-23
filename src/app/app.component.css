@@ -1,1 +1,16 @@
+.navbar {
+    min-height: 80px;
+}
+.navbar li {
+    font-size: 1.5em    
+}
 
+.container-fluid{
+    padding-left: 10%;
+    padding-right: 10%;
+    height: 100%;
+}
+.main{
+    background-color: cadetblue;
+    height: calc(100% - 80px);  /* poate aici altfel facut*/
+}
