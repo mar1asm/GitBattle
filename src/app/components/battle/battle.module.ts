@@ -9,7 +9,7 @@ import { ProfileComponent } from '../profile/profile.component';
     imports:[
         RouterModule.forChild([
             {path: 'battle', component: BattleComponent},
-            {path: 'battle/:profileId', component: ProfileComponent}
+            {path: 'profiles', component: ProfileComponent}
         ]),
         FormsModule
     ],

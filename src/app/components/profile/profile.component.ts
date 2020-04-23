@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile } from './profile';
 import { ProfileService } from 'src/app/services/profile.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,10 +10,15 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class ProfileComponent implements OnInit {
   profile: IProfile;
+  firstProfileName: string;
+  secondProfileName: string;
 
-  constructor(private profileService: ProfileService) {
-    this.profileService.getProfileData('mar1asm').subscribe(profile => {
-      this.profile=profile;
+  constructor(private profileService: ProfileService,
+              private route: ActivatedRoute) {
+    this.firstProfileName=this.route.snapshot.queryParamMap.get('p1');
+    this.secondProfileName=this.route.snapshot.queryParamMap.get('p2');
+    this.profileService.getProfileData(this.firstProfileName)
+        .subscribe(profile => {this.profile=profile;
     });
    }
 
