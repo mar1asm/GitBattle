@@ -1,11 +1,18 @@
  <main class="container-fluid pt-5">
    <h1 class="text-center">Battle</h1>
    <div class="text-center pt-2">
-     <h4>
-       Here you can input two Github accounts to compare and analyze their statistics side by side.
-    </h4>
   </div>
 
+<div class="form-group checkbox pt-3">
+    <p class="h1">Compare: </p>
+    <label *ngFor="let filter of filters" class="sm" (click)="filterClicked(filter)">
+        <input type="checkbox" checked>
+        {{filter}}
+    </label>
+</div>
+
+
+  
 
 
 
@@ -13,24 +20,27 @@
  <form class="form-inline justify-content-center" >
    <div class="form-inline pt-5 ">
     <input #username1
-      class="form-control mx-sm-2 border border-dark form-control-lg" 
+      class="form-control mx-sm-2 border border-dark form-control-xl" 
       type="text" 
-      placeholder="Profile 1">
+      placeholder="Profile 1"
+      required>
     <div class=" versus mx-3">VS</div>
     <input #username2
-      class="form-control mx-sm-2 border border-dark form-control-lg" 
+      class="form-control mx-sm-2 border border-dark form-control-xl" 
       type="text" 
-      placeholder="Profile 2">
+      placeholder="Profile 2"
+      required>
     </div> 
   </form>
   <div class="row justify-content-center pt-5">
   <button 
-      class="btn btn-success btn-lg" 
+      class="btn btn-success btn-xl" 
       type="submit"
-      (click)="onBattle(username1.value, username2.value); username1.value=''; username1.value='' ">
+      (click)="onSubmit(username1.value, username2.value); username1.value=''; username1.value='' ">
     Submit</button>
   </div>
 </div>
+
 
   <p *ngIf="cauta">
     <app-profile></app-profile>
