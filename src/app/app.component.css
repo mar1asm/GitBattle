@@ -1,9 +1,9 @@
 .navbar {
     height: 8%;
-    min-height: 5%;
+    min-height: 3%;
 }
 .navbar li {
-    font-size: 200%;    
+    font-size: 200%;     
 }
 
 .container-fluid{
