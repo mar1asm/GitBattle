@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="row">
+    <div *ngIf="firstProfile.profile" class="col coll pt-5">
+        <div class="row h1">
+            Username: {{firstProfile.profile.login}}
+        </div>
+        <div class="row d-flex">
+            <div class="col">
+                <img src="{{firstProfile.profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="First Profile Img">
+            </div>
+            <div class="col-9">
+                <a href="{{firstProfile.profile.html_url}}">Go to the Github profile</a>
+                <p>Full name: {{firstProfile.profile.name}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="secondProfile.profile" class="col pt-5">
+        <div class="row">
+            {{secondProfile.profile.login}}
+        </div>
+    </div>
+    </div>
+
+
+</div>

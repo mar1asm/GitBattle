@@ -1,0 +1,10 @@
+.container-fluid {
+    
+    background-color: whitesmoke;
+    min-height: 100%;
+}
+
+img{
+    min-height: 100%;
+}
+
