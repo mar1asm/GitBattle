@@ -5,9 +5,12 @@
 
 <div class="form-group checkbox pt-3">
     <p class="h1">Compare: </p>
-    <label *ngFor="let filter of filters" class="sm" (click)="filterClicked(filter)">
-        <input type="checkbox" checked>
-        {{filter}}
+    <label *ngFor="let compare of compareBy; let i=index" 
+            class="sm">
+        <input type="checkbox" 
+        [checked]="bCompareBy[i]"
+        (click)="filterChecked(i, $event.target.checked)">
+        {{compare}}
     </label>
 </div>
 
@@ -22,7 +25,7 @@
     <input #username1
       class="form-control mx-sm-2 border border-dark form-control-xl" 
       type="text" 
-      placeholder="Profile 1"
+      placeholder="Profile 1"  
       required>
     <div class=" versus mx-3">VS</div>
     <input #username2

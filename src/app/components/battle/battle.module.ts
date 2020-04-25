@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 
 import { BattleComponent } from './battle.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { reducer } from './state/battle.reducer';
 
 @NgModule({
     imports:[
@@ -11,9 +13,9 @@ import { ProfileComponent } from '../profile/profile.component';
             {path: 'battle', component: BattleComponent},
             {path: 'profiles', component: ProfileComponent}
         ]),
-        FormsModule
+        FormsModule,
+        StoreModule.forFeature('battle', reducer)
     ],
-    declarations:[
-    ]
+    declarations:[]
 })
 export class BattleModule { }

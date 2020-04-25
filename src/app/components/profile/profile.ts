@@ -30,3 +30,4 @@ export interface IProfile{
     created_at: Date;
     updated_at: Date;
     }
+    

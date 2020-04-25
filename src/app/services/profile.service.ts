@@ -1,20 +1,45 @@
 import { Injectable } from '@angular/core';
-import {Http, Headers } from '@angular/http';   //getting data
-import { map } from 'rxjs/operators';
+import { IProfile } from '../components/profile/profile';
+
+import { HttpClient } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private cliendId:string;
+  private cliendId: string;
   private cliendSecret: string;
 
-  constructor(private http:Http) { 
+  private apiRoot: string = 'https://api.github.com/users/';
+  private loading: boolean;
+  private profile: IProfile;
+
+  constructor(private http: HttpClient) {
+    this.loading = false;
+    this.profile = null;
   }
 
-  getProfileData(username:string){
-    return this.http.get("https://api.github.com/users/"+username)
-                .pipe(map(res =>res.json()));
+
+  searchProfile(username: string) {
+    let promise = new Promise((resolve, reject) =>{
+      let apiUrl = `${this.apiRoot}${username}`;
+    this.http.get(apiUrl).toPromise().then(
+      (res:IProfile) => {
+        this.profile=res;
+        resolve();
+      },
+      msg =>{
+        reject();
+      }
+    )
+    });
+    return promise;
+  }
+
+  getProfileData():IProfile{
+    if (this.profile)
+    return this.profile; else
+    return null;
   }
 }
