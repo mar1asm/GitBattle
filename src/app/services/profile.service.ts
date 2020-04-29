@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http'
 })
 export class ProfileService {
 
-  private cliendId: string;
-  private cliendSecret: string;
+  private clientId='87316d01039ecc7817a8';
+  private clientSecret='1b96319ce0f9d74ebc236eab5e1b3640b54ed1f7';
 
   private apiRoot: string = 'https://api.github.com/users/';
   private loading: boolean;
@@ -23,7 +23,7 @@ export class ProfileService {
 
   searchProfile(username: string) {
     let promise = new Promise((resolve, reject) =>{
-      let apiUrl = `${this.apiRoot}${username}`;
+      let apiUrl = `${this.apiRoot}${username}?client_id=${this.clientId}&client_secret=${this.clientSecret}`;
     this.http.get(apiUrl).toPromise().then(
       (res:IProfile) => {
         this.profile=res;

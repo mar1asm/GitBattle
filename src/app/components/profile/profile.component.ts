@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile } from './profile';
 import { ProfileService } from 'src/app/services/profile.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
-import * as fromBattle from '../battle/state/battle.reducer'
-import * as battleActions from '../battle/state/battle.actions';
+import * as fromBattle from '../battle/state/battle.reducer';
+import * as fromProfile from './state/profile.reducer';
+import * as profileActions from './state/profile.actions';
 
 @Component({
   selector: 'app-profile',
@@ -27,10 +28,13 @@ export class ProfileComponent implements OnInit {
   }
 
   private loading = false;
+  hasError=false;
 
   constructor(private profileService: ProfileService,
     private route: ActivatedRoute,
-    private store: Store<fromBattle.State>) {
+    private battleStore: Store<fromBattle.State>,
+    private profileStore: Store<fromProfile.State>,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,8 +47,10 @@ export class ProfileComponent implements OnInit {
     this.loading = true;  //add some loading animation
     this.profileService.searchProfile(this.firstProfile.name).then(() => {
       this.firstProfile.profile = this.profileService.getProfileData();
+      this.profileStore.dispatch(new profileActions.SetFirstProfile(this.firstProfile.profile));
       this.profileService.searchProfile(this.secondProfile.name).then(() => {
         this.secondProfile.profile = this.profileService.getProfileData();
+        this.profileStore.dispatch(new profileActions.SetSecondProfile(this.secondProfile.profile));
         this.loading = false;
         if (this.firstProfile.profile && this.secondProfile.profile) {
           this.getComparisonOptions();
@@ -56,8 +62,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getComparisonOptions() {
-    this.store.pipe(select(fromBattle.getBattleState)).subscribe(
+    this.battleStore.pipe(select(fromBattle.getBattleState)).subscribe(
       compareBy => {
+        console.log(compareBy);
         this.calculateScore(compareBy);
       }
     );
@@ -66,6 +73,13 @@ export class ProfileComponent implements OnInit {
 
 
   calculateScore(compareBy: fromBattle.BattleState): void {
+    if (compareBy==null)
+      {
+        this.hasError=true;
+        setTimeout(() => {
+          this.router.navigate(['/battle']);
+        }, 3000);
+      }
     if (compareBy.compareByRepos) {
       this.firstProfile.score += this.firstProfile.profile.public_repos;
       this.secondProfile.score += this.secondProfile.profile.public_repos;

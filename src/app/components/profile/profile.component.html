@@ -1,6 +1,6 @@
-<div class="container-fluid">
-    <div class="row">
-    <div *ngIf="firstProfile.profile" class="col coll pt-5">
+<div  class="container-fluid w-100">
+    <div class="row w-100" *ngIf="!hasError">
+    <div *ngIf="firstProfile.profile" class="col pt-5">
         <div class="row h1">
             Username: {{firstProfile.profile.login}}
         </div>
@@ -16,10 +16,22 @@
     </div>
 
     <div *ngIf="secondProfile.profile" class="col pt-5">
-        <div class="row">
-            {{secondProfile.profile.login}}
+        <div class="row  h1">
+            Username: {{secondProfile.profile.login}}
+        </div>
+        <div class="row d-flex">
+            <div class="col">
+                <img src="{{secondProfile.profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="Second Profile Img">
+            </div>
+            <div class="col-9">
+                <a href="{{secondProfile.profile.html_url}}">Go to the Github profile</a>
+                <p>Full name: {{secondProfile.profile.name}}</p>
+            </div>
         </div>
     </div>
+    </div>
+    <div *ngIf="hasError">
+        an error occurred. please try again
     </div>
 
 

@@ -1,6 +1,6 @@
 import * as fromRoot from '../../../state/app.state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { BattleActions, BattleActionTypes, SetFirstProfile } from './battle.actions';
+import { BattleActions, BattleActionTypes } from './battle.actions';
 import { IProfile } from '../../profile/profile';
 
 export interface State extends fromRoot.State{
@@ -15,9 +15,6 @@ export interface BattleState{
     compareByCompany: boolean;
     compareByVechime: boolean;
     compareByCompleteness: boolean;
-
-    setFirstProfile:IProfile;
-    setSecondProfile:IProfile;
 }
 
 const initialState: BattleState ={
@@ -28,21 +25,10 @@ const initialState: BattleState ={
     compareByCompany:true,
     compareByVechime:true,
     compareByCompleteness:true,
-    setFirstProfile:null,
-    setSecondProfile:null
 };
 
 export const getBattleState = createFeatureSelector<BattleState>('battle');
 
-export const getSetFirstProfile= createSelector(
-    getBattleState,
-    state => state.setFirstProfile
-);
-
-export const getSetSecondProfile= createSelector(
-    getBattleState,
-    state => state.setSecondProfile
-);
 
 
 export function reducer(state=initialState, action:BattleActions): BattleState
@@ -86,16 +72,6 @@ export function reducer(state=initialState, action:BattleActions): BattleState
                 compareByCompleteness: action.payload
             };
         
-        case BattleActionTypes.SetFirstProfile:
-            return{
-                ...state,
-                setFirstProfile:{...action.payload}
-            }
-        case BattleActionTypes.SetSecondProfile:
-            return{
-                ...state,
-                setSecondProfile:{...action.payload}
-            }
 
         default:
             return state;

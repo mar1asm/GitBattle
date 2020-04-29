@@ -1,46 +1,168 @@
-<div class="container-fluid">
-    <div class="h1 text-center pt-5">
-        Toppom
+<div class="menu">
+    <div class="menuOption">
+        Sort By:
     </div>
+    <label>
+        <input type="radio" name="Sort" value="Followers" (click)="filterChecked($event.target.value)" checked>
+        Followers
+    </label> <br>
+    <label>
+        <input type="radio" name="Sort" value= "Repos" (click)="filterChecked($event.target.value)">
+        Repos
+    </label>
+    <div class="menuOption">
+        Language: 
+    </div>
+        <label>
+            <input type="radio" name="Language" value="Js" (click)="filterChecked($event.target.value)" checked>
+            Js
+        </label> <br>
+        <label>
+            <input type="radio" name="Language" value= "Cpp" (click)="filterChecked($event.target.value)">
+            Cpp
+        </label> <br>
+        <label>
+            <input type="radio" name="Language" value= "Python" (click)="filterChecked($event.target.value)">
+            Python
+        </label>
+</div>
+<div class="container-fluid h-100">
+    <div class="tab">
 
-    <div class="container pt-5">
+    <div class="table">
         <div class="row">
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+                <div class="desc">
+                    <div>
+                        Nume: un nume
+                    </div>
+                    <div>
+                        Repos: un nr
+                    </div>
+                    <div>
+                        alte detalii: 
+                    </div>
+                </div>
             </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+                <div class="desc">
+                    <div>
+                        Nume: un nume
+                    </div>
+                    <div>
+                        Repos: un nr
+                    </div>
+                    <div>
+                        alte detalii: 
+                    </div>
+                </div>
             </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/400?random=1" />
             </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
             </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
+            </div>
+            <div class="col">
+                <img src="https://picsum.photos/200/300?random=1" />
             </div>
         </div>
 
-        <div class="row pt-3">
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
-            </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
-            </div>
-            <div class="col d-flex justify-content-center">
-                <img src="https://via.placeholder.com/200" class="img-fluid">
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <a href="#" class="btn previous">&laquo; Previous</a>
-            <a href="#" class="btn next">Next &raquo;</a>
-        </div>
     </div>
+</div>
 </div>

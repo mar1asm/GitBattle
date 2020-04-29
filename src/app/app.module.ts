@@ -12,8 +12,6 @@ import { HttpClientModule} from '@angular/common/http';
 /* components */
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { TopComponent } from './components/top/top.component';
-import { BattleComponent } from './components/battle/battle.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { environment } from 'src/environments/environment';
@@ -25,8 +23,6 @@ import { AboutComponent } from './components/about/about.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    TopComponent,
-    BattleComponent,
     PageNotFoundComponent,
     ProfileComponent,
     AboutComponent

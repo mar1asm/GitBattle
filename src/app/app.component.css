@@ -3,16 +3,13 @@
     min-height: 3%;
 }
 .navbar li {
-    font-size: 200%;     
+    font-size: 5vmin;     
 }
 
 .container-fluid{
+    background-color: cadetblue;
     padding-left: 10%;
     padding-right: 10%;
     height: 100%;
-}
-.main{
-    background-color: cadetblue;
-    height: 92%;  /* poate aici altfel facut*/
 }
 

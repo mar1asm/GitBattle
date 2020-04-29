@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { IProfile } from '../../profile/profile';
 
 export enum BattleActionTypes {
     CompareByRepos = '[Battle] Compare By Repos',
@@ -10,8 +9,6 @@ export enum BattleActionTypes {
     CompareByVechime = '[Battle] Compare By Vechime',
     CompareByCompleteness = '[Battle] Compare By Completeness',
 
-    SetFirstProfile='[Battle] Set First Profile',
-    SetSecondProfile='[Battle] Set Second Profile'
 }
 
 export class CompareByRepos implements Action {
@@ -56,17 +53,6 @@ export class CompareByCompleteness implements Action {
     constructor(public payload: boolean) { }
 }
 
-export class SetFirstProfile implements Action {
-    readonly type= BattleActionTypes.SetFirstProfile;
-
-    constructor(public payload: IProfile) { }
-}
-
-export class SetSecondProfile implements Action {
-    readonly type= BattleActionTypes.SetSecondProfile;
-
-    constructor(public payload: IProfile) { }
-}
 
 export type BattleActions = CompareByBlog 
     | CompareByRepos 
@@ -74,6 +60,4 @@ export type BattleActions = CompareByBlog
     | CompareByFollowers 
     | CompareByVechime 
     | CompareByCompleteness 
-    | CompareByCompany
-    | SetFirstProfile
-    | SetSecondProfile;
+    | CompareByCompany;

@@ -1,10 +1,49 @@
 .container-fluid {
-    
     background-color: whitesmoke;
-    min-height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+    display: inline-flex;
+    justify-content: right;
 }
 
-img{
-    min-height: 100%;
+.tab{
+    justify-content: right;
+    width: 75%;
+}
+
+
+.menu{
+    padding-top: 10vh;
+    padding-left: 3vw;
+    position: fixed;
+    width: 100%;
+}
+
+.column{
+    display: inline-flex;
+    justify-content: right;
+}
+
+.table {
+    padding-top: 10vh;
+    display:table;
+    width:100%;
+}
+.row {
+    display:table-row;
+    height:20vmin;
+}
+.col {
+    display: inline-flex;
+    width: 33%;;
+    height:15vmin;
+}
+img {
+    width:45%;
+    height:100%;
+}
+.desc{
+    padding-left: 1vw;
+    font-size: 1.5vmin;
 }
 

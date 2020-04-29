@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
@@ -10,19 +10,19 @@ import * as battleActions from './state/battle.actions';
   templateUrl: './battle.component.html',
   styleUrls: ['./battle.component.css']
 })
-export class BattleComponent implements OnInit {
+export class BattleComponent implements AfterViewInit, OnInit {
 
   _username1='';
-  _username2='';
-
-  cauta=false; /* vezi ce faci aici*/
+  _username2=''; 
+  ready: boolean=false;
 
   compareBy:string[]=['repos','gists','blog','followers', 'company', 'vechime', 'profile completeness'];
   bCompareBy:boolean[]=[true, true, true, true, true, true, true, true, true];  /*aici trebuie sa fac altfel */
   filtersName:string[]=['compareByRepos'];
 
   constructor(private router: Router,
-              private store: Store<fromBattle.State>) { }
+              private store: Store<fromBattle.State>,
+              private cdr: ChangeDetectorRef) { }
   
 
   ngOnInit(): void {
@@ -33,6 +33,10 @@ export class BattleComponent implements OnInit {
           this.bCompareBy[i++]=compareBy[com];
         }
       });
+  }
+  ngAfterViewInit(){
+    this.ready = true; 
+    this.cdr.detectChanges();
   }
 
 
@@ -47,8 +51,7 @@ export class BattleComponent implements OnInit {
           queryParams:{p1: this._username1, p2: this._username2}
         });
         
-      } else
-      this.cauta=false;
+      }
   }
 
 
