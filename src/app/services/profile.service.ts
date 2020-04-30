@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from '../components/profile/profile';
-
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +18,7 @@ export class ProfileService {
     this.loading = false;
     this.profile = null;
   }
+
 
 
   searchProfile(username: string) {

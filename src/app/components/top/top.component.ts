@@ -3,6 +3,7 @@ import { Store, select } from '@ngrx/store';
 
 import * as fromTop from './state/top.reducer';
 import * as topActions from './state/top.actions';
+import { TopService } from '../../services/top.service';
 
 @Component({
   selector: 'app-top',
@@ -14,7 +15,8 @@ export class TopComponent implements OnInit {
   compareByFollowers = true;
   compareByRepos = false;
 
-  constructor(private store: Store<fromTop.State>) { }
+  constructor(private store: Store<fromTop.State>,
+    private topService: TopService) { }
 
   ngOnInit(): void {
     this.store.pipe(select(fromTop.getTopState)).subscribe(
@@ -22,9 +24,12 @@ export class TopComponent implements OnInit {
         this.compareByFollowers = compareBy.sortByFollowers;
         this.compareByRepos = compareBy.sortByRepos;
       });
-  }
+    this.topService.searchTopData('followers','').then(()=>{
+    console.log(this.topService.getTopData());
+    });
+}
 
-  filterChecked(filter: string) {
+  filterChecked(filter: string) {  //facut altfel aici
     switch (filter) {
       case 'Followers':
         this.store.dispatch(new topActions.SetSortByFollowers(true));
@@ -48,6 +53,11 @@ export class TopComponent implements OnInit {
         this.store.dispatch(new topActions.SetSortByLanguageJs(false));
         this.store.dispatch(new topActions.SetSortByLanguageCpp(false));
         this.store.dispatch(new topActions.SetSortByLanguagePython(true));
+        break;
+      case 'Any':
+        this.store.dispatch(new topActions.SetSortByLanguageJs(false));
+        this.store.dispatch(new topActions.SetSortByLanguageCpp(false));
+        this.store.dispatch(new topActions.SetSortByLanguagePython(false));
         break;
       default:
         break;

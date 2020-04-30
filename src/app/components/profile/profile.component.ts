@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile } from './profile';
-import { ProfileService } from 'src/app/services/profile.service';
+import { ProfileService } from '../../services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit {
   getComparisonOptions() {
     this.battleStore.pipe(select(fromBattle.getBattleState)).subscribe(
       compareBy => {
-        console.log(compareBy);
         this.calculateScore(compareBy);
       }
     );
