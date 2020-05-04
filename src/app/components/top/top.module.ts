@@ -4,7 +4,7 @@ import { TopComponent } from './top.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/top.reducer';
 import { CommonModule } from '@angular/common';
-import { ScrollingModule } from '@angular/cdk/scrolling'; 
+import { ScrollingModule,CdkVirtualScrollViewport } from '@angular/cdk/scrolling'; 
 
 
 @NgModule({

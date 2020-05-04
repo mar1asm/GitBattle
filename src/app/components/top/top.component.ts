@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import * as fromTop from './state/top.reducer';
 import * as topActions from './state/top.actions';
 import { TopService } from '../../services/top.service';
+import { IProfile } from '../profile/profile';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-top',
@@ -12,8 +14,16 @@ import { TopService } from '../../services/top.service';
 })
 export class TopComponent implements OnInit {
 
-  compareByFollowers = true;
-  compareByRepos = false;
+  compareBy: string;
+  compareByLanguage: string;
+
+  topProfiles: IProfile[] = [];
+  
+  
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport: CdkVirtualScrollViewport;
+
+  languages = ['Any', 'JavaScript', 'Java', 'Python', 'HTML', 'C%2B%2B', 'C%23', 'PHP', 'Ruby', 'C', 'CSS'];
 
   constructor(private store: Store<fromTop.State>,
     private topService: TopService) { }
@@ -21,48 +31,25 @@ export class TopComponent implements OnInit {
   ngOnInit(): void {
     this.store.pipe(select(fromTop.getTopState)).subscribe(
       compareBy => {
-        this.compareByFollowers = compareBy.sortByFollowers;
-        this.compareByRepos = compareBy.sortByRepos;
+        this.compareBy = compareBy.sortBy;
+        this.compareByLanguage = compareBy.sortByLanguage;
+        this.topService.searchTopData(this.compareBy, this.compareByLanguage).then(() => {
+          this.topProfiles = this.topService.getTopData();
+          this.viewport.scrollToIndex(0);
+        });
       });
-    this.topService.searchTopData('followers','').then(()=>{
-    console.log(this.topService.getTopData());
-    });
-}
+  }
 
-  filterChecked(filter: string) {  //facut altfel aici
-    switch (filter) {
-      case 'Followers':
-        this.store.dispatch(new topActions.SetSortByFollowers(true));
-        this.store.dispatch(new topActions.SetSortByRepos(false));
+  filterChecked(name: string, filter: string) {
+    switch (name) {
+      case 'Language':
+        this.store.dispatch(new topActions.SetSortByLanguage(filter));
         break;
-      case 'Repos':
-        this.store.dispatch(new topActions.SetSortByFollowers(false));
-        this.store.dispatch(new topActions.SetSortByRepos(true));
-        break;
-      case 'Js':
-        this.store.dispatch(new topActions.SetSortByLanguageJs(true));
-        this.store.dispatch(new topActions.SetSortByLanguageCpp(false));
-        this.store.dispatch(new topActions.SetSortByLanguagePython(false));
-        break;
-      case 'Cpp':
-        this.store.dispatch(new topActions.SetSortByLanguageJs(false));
-        this.store.dispatch(new topActions.SetSortByLanguageCpp(true));
-        this.store.dispatch(new topActions.SetSortByLanguagePython(false));
-        break;
-      case 'Python':
-        this.store.dispatch(new topActions.SetSortByLanguageJs(false));
-        this.store.dispatch(new topActions.SetSortByLanguageCpp(false));
-        this.store.dispatch(new topActions.SetSortByLanguagePython(true));
-        break;
-      case 'Any':
-        this.store.dispatch(new topActions.SetSortByLanguageJs(false));
-        this.store.dispatch(new topActions.SetSortByLanguageCpp(false));
-        this.store.dispatch(new topActions.SetSortByLanguagePython(false));
+      case 'Sort':
+        this.store.dispatch(new topActions.SetSortBy(filter));
         break;
       default:
         break;
-
     }
   }
-
 }

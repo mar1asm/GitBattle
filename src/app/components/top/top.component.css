@@ -1,14 +1,9 @@
 .container-fluid {
     background-color: whitesmoke;
-    overflow: auto;
-    scrollbar-width: none;
     display: inline-flex;
     justify-content: right;
-}
-
-.tab{
-    justify-content: right;
     width: 75%;
+    float: right;
 }
 
 
@@ -16,7 +11,9 @@
     padding-top: 10vh;
     padding-left: 3vw;
     position: fixed;
-    width: 100%;
+    width: 25%;
+    background-color: whitesmoke;
+    height: 100%;
 }
 
 .column{
@@ -24,26 +21,29 @@
     justify-content: right;
 }
 
-.table {
-    padding-top: 10vh;
-    display:table;
-    width:100%;
-}
-.row {
-    display:table-row;
-    height:20vmin;
-}
-.col {
-    display: inline-flex;
-    width: 33%;;
-    height:15vmin;
-}
 img {
-    width:45%;
     height:100%;
+    width: 90%;
 }
-.desc{
-    padding-left: 1vw;
-    font-size: 1.5vmin;
+
+.languages{
+    display: block;
+}
+
+.profiles{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    padding-top: 2vh;
+}
+
+.title{
+    padding: 5vh;
+    text-align: center;
+}
+
+.col{
+    height: 100%;
 }
 

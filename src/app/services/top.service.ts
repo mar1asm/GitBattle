@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from '../components/profile/profile';
 import { HttpClient } from '@angular/common/http';
+import { ProfileService } from './profile.service';
 
 interface ITopProfiles {
   total_count: number,
@@ -20,23 +21,30 @@ export class TopService {
 
   topProfiles: ITopProfiles;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private profileService: ProfileService) {
     this.topProfiles = null;
   }
 
   searchTopData(query: string, language: string) {
-    if (language) {
-      this.apiUrl = `${this.apiRoot}q=${language}:%3E10+sort:${query}&${this.clientId}&${this.clientSecret}&per_page=100`;
+
+    let sortBy=query=='repos'? 'repositories': 'followers';
+    if (language!='Any') {
+      this.apiUrl = `${this.apiRoot}q=language:${language}+sort:${sortBy}&${this.clientId}&${this.clientSecret}&per_page=100`;
     }
     else {
-      this.apiUrl = `${this.apiRoot}q=${query}:%3E10+sort:${query}&${this.clientId}&${this.clientSecret}&per_page=100`;
+      this.apiUrl = `${this.apiRoot}q=${query}:%3E10+sort:${sortBy}&${this.clientId}&${this.clientSecret}&per_page=100`;
     }
-
     let promise = new Promise((resolve, reject) => {
       this.http.get(this.apiUrl).toPromise().then(
         (res: ITopProfiles) => {
-          this.topProfiles = res;
-          console.log(this.topProfiles.items);
+          this.topProfiles=res;
+          for (let i=0; i<100; i++){
+            this.profileService.searchProfile(res.items[i].login).then(
+              ()=>{
+            this.topProfiles.items[i]=this.profileService.getProfileData();
+          });
+        }
           resolve();
         },
         msg => {
