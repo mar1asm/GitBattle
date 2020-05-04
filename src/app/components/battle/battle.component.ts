@@ -16,8 +16,8 @@ export class BattleComponent implements AfterViewInit, OnInit {
   _username2=''; 
   ready: boolean=false;
 
-  compareBy:string[]=['repos','gists','blog','followers', 'company', 'vechime', 'profile completeness'];
-  bCompareBy:boolean[]=[true, true, true, true, true, true, true, true, true];  /*aici trebuie sa fac altfel */
+  compareBy:string[]=['repos','gists','blog','followers', 'company', 'vechime'];
+  bCompareBy:boolean[]=[true, true, true, true, true, true, true, true];  /*aici trebuie sa fac altfel */
   filtersName:string[]=['compareByRepos'];
 
   constructor(private router: Router,

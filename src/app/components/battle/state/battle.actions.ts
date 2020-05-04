@@ -6,8 +6,7 @@ export enum BattleActionTypes {
     CompareByBlog = '[Battle] Compare By Blog',
     CompareByFollowers = '[Battle] Compare By Followers',
     CompareByCompany = '[Battle] Compare By Company',
-    CompareByVechime = '[Battle] Compare By Vechime',
-    CompareByCompleteness = '[Battle] Compare By Completeness',
+    CompareByVechime = '[Battle] Compare By Vechime'
 
 }
 
@@ -47,11 +46,6 @@ export class CompareByVechime implements Action {
     constructor(public payload: boolean) { }
 }
 
-export class CompareByCompleteness implements Action {
-    readonly type = BattleActionTypes.CompareByCompleteness;
-
-    constructor(public payload: boolean) { }
-}
 
 
 export type BattleActions = CompareByBlog 
@@ -59,5 +53,4 @@ export type BattleActions = CompareByBlog
     | CompareByGists 
     | CompareByFollowers 
     | CompareByVechime 
-    | CompareByCompleteness 
     | CompareByCompany;

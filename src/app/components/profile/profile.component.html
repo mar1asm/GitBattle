@@ -1,38 +1,30 @@
-<div  class="container-fluid w-100">
-    <div class="row w-100" *ngIf="!hasError">
-    <div *ngIf="firstProfile.profile" class="col pt-5">
-        <div class="row h1">
-            Username: {{firstProfile.profile.login}}
-        </div>
-        <div class="row d-flex">
-            <div class="col">
-                <img src="{{firstProfile.profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="First Profile Img">
+<div class="container-fluid w-100">
+    <div class="row central" *ngIf="!hasError">
+        <div *ngFor="let profile of profiles; index as i" class="col-5 {{winner==i}}">
+            <div class="row title">
+                {{profile.login}}({{profile.name? profile.name: '-'}})
+                <div class="winner" *ngIf="winner==i">WINNER</div>
             </div>
-            <div class="col-9">
-                <a href="{{firstProfile.profile.html_url}}">Go to the Github profile</a>
-                <p>Full name: {{firstProfile.profile.name}}</p>
+            <div class="row d-flex">
+                <div class="col">
+                    <img src="{{profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="Profile Img">
+                </div>
+                <div class="col-7">
+                    <a href="{{profile.html_url}}">Go to the Github profile</a> <br>
+                    Number of repos: {{profile.public_repos}} <br>
+                    Number of gists: {{profile.public_gists}} <br>
+                    Number of followers: {{profile.followers}} <br>
+                    Blog: {{profile.blog? profile.blog: '-'}} <br>
+                    Company: {{profile.company? profile.company: '-'}} <br>
+                    Active since: {{profile.created_at | date: 'dd/MM/yyyy'}}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div *ngIf="secondProfile.profile" class="col pt-5">
-        <div class="row  h1">
-            Username: {{secondProfile.profile.login}}
-        </div>
-        <div class="row d-flex">
-            <div class="col">
-                <img src="{{secondProfile.profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="Second Profile Img">
-            </div>
-            <div class="col-9">
-                <a href="{{secondProfile.profile.html_url}}">Go to the Github profile</a>
-                <p>Full name: {{secondProfile.profile.name}}</p>
-            </div>
-        </div>
     </div>
+    <div class="scores"> Final scores: {{firstProfile.score| number: "1.0-0"}}:
+        {{secondProfile.score |number: "1.0-0"}}</div>
+    <div class="chart">
+        <canvas id="myChart"></canvas>
     </div>
-    <div *ngIf="hasError">
-        an error occurred. please try again
-    </div>
-
-
 </div>

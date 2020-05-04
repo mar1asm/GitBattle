@@ -14,7 +14,6 @@ export interface BattleState{
     compareByFollowers: boolean;
     compareByCompany: boolean;
     compareByVechime: boolean;
-    compareByCompleteness: boolean;
 }
 
 const initialState: BattleState ={
@@ -23,8 +22,7 @@ const initialState: BattleState ={
     compareByBlog: true,
     compareByFollowers: true,
     compareByCompany:true,
-    compareByVechime:true,
-    compareByCompleteness:true,
+    compareByVechime:true
 };
 
 export const getBattleState = createFeatureSelector<BattleState>('battle');
@@ -66,12 +64,6 @@ export function reducer(state=initialState, action:BattleActions): BattleState
                 ...state,
                 compareByVechime: action.payload
             };
-        case BattleActionTypes.CompareByCompleteness:
-            return {
-                ...state,
-                compareByCompleteness: action.payload
-            };
-        
 
         default:
             return state;
