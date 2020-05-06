@@ -1,35 +1,9 @@
-import * as fromRoot from '../../../state/app.state';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { BattleActions, BattleActionTypes } from './battle.actions';
-import { IProfile } from '../../profile/profile';
-
-export interface State extends fromRoot.State{
-    battle: BattleState;
-}
-
-export interface BattleState{
-    compareByRepos: boolean;
-    compareByGists: boolean;
-    compareByBlog: boolean;
-    compareByFollowers: boolean;
-    compareByCompany: boolean;
-    compareByVechime: boolean;
-}
-
-const initialState: BattleState ={
-    compareByRepos: true,
-    compareByGists: true,
-    compareByBlog: true,
-    compareByFollowers: true,
-    compareByCompany:true,
-    compareByVechime:true
-};
-
-export const getBattleState = createFeatureSelector<BattleState>('battle');
+import { BattleActions, BattleActionTypes } from '../actions/battle.actions';
+import { IBattleState, initialBattleState } from '../state/battle.state';
 
 
 
-export function reducer(state=initialState, action:BattleActions): BattleState
+export function reducer(state=initialBattleState, action:BattleActions): IBattleState
 {
     switch(action.type){
         

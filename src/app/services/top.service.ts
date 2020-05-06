@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IProfile } from '../components/profile/profile';
+import { IProfile } from '../components/profile/IProfile';
 import { HttpClient } from '@angular/common/http';
 import { ProfileService } from './profile.service';
 
@@ -40,10 +40,10 @@ export class TopService {
         (res: ITopProfiles) => {
           this.topProfiles=res;
           for (let i=0; i<100; i++){
-            this.profileService.searchProfile(res.items[i].login).then(
-              ()=>{
-            this.topProfiles.items[i]=this.profileService.getProfileData();
-          });
+            //this.profileService.searchProfile(res.items[i].login).then(
+            //  ()=>{
+            //this.topProfiles.items[i]=this.profileService.getProfileData();
+          //});
         }
           resolve();
         },

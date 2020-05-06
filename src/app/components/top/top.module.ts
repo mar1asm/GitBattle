@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { TopRoutingModule } from './top.routing.module';
 import { TopComponent } from './top.component';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './state/top.reducer';
+import { reducer } from '../../store/reducers/top.reducer';
 import { CommonModule } from '@angular/common';
 import { ScrollingModule,CdkVirtualScrollViewport } from '@angular/cdk/scrolling'; 
 

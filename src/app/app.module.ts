@@ -13,8 +13,8 @@ import { HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 
 
@@ -22,15 +22,15 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent,
-    ProfileComponent
+    PageNotFoundComponent
   ],
   imports: [
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     BrowserModule,
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       name: 'Git Battle',
       maxAge:25,

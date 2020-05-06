@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IProfile } from '../components/profile/profile';
+import { IProfile } from '../components/profile/IProfile';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,26 +21,8 @@ export class ProfileService {
   }
 
 
-
-  searchProfile(username: string) {
-    let promise = new Promise((resolve, reject) =>{
-      let apiUrl = `${this.apiRoot}${username}?client_id=${this.clientId}&client_secret=${this.clientSecret}`;
-    this.http.get(apiUrl).toPromise().then(
-      (res:IProfile) => {
-        this.profile=res;
-        resolve();
-      },
-      msg =>{
-        reject();
-      }
-    )
-    });
-    return promise;
-  }
-
-  getProfileData():IProfile{
-    if (this.profile)
-    return this.profile; else
-    return null;
+  getProfileData(username: string): Observable<IProfile>{
+    let apiUrl = `${this.apiRoot}${username}?client_id=${this.clientId}&client_secret=${this.clientSecret}`;
+    return this.http.get<IProfile>(apiUrl);
   }
 }

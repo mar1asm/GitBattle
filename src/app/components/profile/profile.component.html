@@ -1,5 +1,5 @@
 <div class="container-fluid w-100">
-    <div class="row central" *ngIf="!hasError">
+    <div class="row central" *ngIf="!loading && !hasError">
         <div *ngFor="let profile of profiles; index as i" class="col-5 {{winner==i}}">
             <div class="row title">
                 {{profile.login}}({{profile.name? profile.name: '-'}})
@@ -22,9 +22,16 @@
         </div>
 
     </div>
-    <div class="scores"> Final scores: {{firstProfile.score| number: "1.0-0"}}:
+    <div *ngIf="!hasError" class="scores"> Final scores: {{firstProfile.score| number: "1.0-0"}}:
         {{secondProfile.score |number: "1.0-0"}}</div>
     <div class="chart">
         <canvas id="myChart"></canvas>
+    </div>
+
+    <div *ngIf="hasError">
+        {{error}}
+        <button class="btn btn-primary" (click)="goBack()">
+            Go back
+        </button>
     </div>
 </div>

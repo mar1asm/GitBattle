@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { IProfile } from './profile';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { IProfile } from './IProfile';
 import { ProfileService } from '../../services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
 import { Chart } from '../../../../node_modules/chart.js';
 
-import * as fromBattle from '../battle/state/battle.reducer';
-import * as fromProfile from './state/profile.reducer';
-import * as profileActions from './state/profile.actions';
+import * as battleState from '../../store/state/battle.state';
+import * as battleSelectors from '../../store/selectors/battle.selectors';
+import * as profileSelectors from '../../store/selectors/profile.selectors';
+import * as profileState from '../../store/state/profile.state';
+import * as profileActions from '../../store/actions/profile.actions';
 
 @Component({
   selector: 'app-profile',
@@ -22,26 +24,31 @@ export class ProfileComponent implements OnInit {
     profile: <IProfile>null,
     name: <string>null,
     score: <number>0,
-    values: <number[]>[]
+    values: <number[]>[],
+    loaded: <boolean>false
   }
   secondProfile = {
     profile: <IProfile>null,
     name: <string>null,
     score: <number>0,
-    values: <number[]>[]
+    values: <number[]>[],
+    loaded: <boolean>false
   }
 
-  private loading = false;
+  loading = true;
+  loaded = false;
   hasError = false;
+  error: string;
   winner: number;
   profiles: IProfile[] = [];
   criteria: string[] = [];
 
   constructor(private profileService: ProfileService,
     private route: ActivatedRoute,
-    private battleStore: Store<fromBattle.State>,
-    private profileStore: Store<fromProfile.State>,
-    private router: Router) {
+    private battleStore: Store<battleState.BattleState>,
+    private profileStore: Store<profileState.ProfileState>,
+    private router: Router,
+    private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -51,42 +58,58 @@ export class ProfileComponent implements OnInit {
   }
 
   doSearch() {
-    this.loading = true;  //add some loading animation
-    this.profileService.searchProfile(this.firstProfile.name).then(() => {
-      this.firstProfile.profile = this.profileService.getProfileData();
-      this.profileStore.dispatch(new profileActions.SetFirstProfile(this.firstProfile.profile));
-      this.profileService.searchProfile(this.secondProfile.name).then(() => {
-        this.secondProfile.profile = this.profileService.getProfileData();
-        this.profileStore.dispatch(new profileActions.SetSecondProfile(this.secondProfile.profile));
-        this.loading = false;
-        if (this.firstProfile.profile && this.secondProfile.profile) {
-          this.profiles.push(this.firstProfile.profile);
-          this.profiles.push(this.secondProfile.profile);
+    this.profileStore.dispatch(new profileActions.SetFirstProfile(this.firstProfile.name));
+    this.profileStore.dispatch(new profileActions.SetSecondProfile(this.secondProfile.name));
+
+    const firstProfileSubscription = this.profileStore.pipe(select(profileSelectors.getFirstProfile)).subscribe(
+      firstProfile => {
+        this.firstProfile.profile = firstProfile;
+      }
+    );
+
+    const secondProfileSubscription = this.profileStore.pipe(select(profileSelectors.getSecondProfile)).subscribe(
+      secondProfile => {
+        this.secondProfile.profile = secondProfile;
+      }
+    );
+
+    const errorSub = this.profileStore.pipe(select(profileSelectors.getError)).subscribe(
+      error => { if (error) { this.error = 'Profile Not Found'; this.hasError = true } }
+    );
+
+    const loadedSub = this.profileStore.pipe(select(profileSelectors.haveLoaded)).subscribe(
+      (loaded: boolean[]) => {
+        if (loaded[0] && loaded[1] && !this.loaded) {
+          this.loading = false;
+          this.loaded = true;
+          firstProfileSubscription.unsubscribe();
+          secondProfileSubscription.unsubscribe();
+          this.profiles.push(this.firstProfile.profile, this.secondProfile.profile);
+          console.log(this.profiles);
           this.getComparisonOptions();
-        } else {
-          console.log('error');
         }
-      })
-    });
+
+      }
+    )
+    if (!this.loading)
+      loadedSub.unsubscribe();
   }
 
   getComparisonOptions() {
-    this.battleStore.pipe(select(fromBattle.getBattleState)).subscribe(
+    this.battleStore.pipe(select(battleSelectors.getBattleState)).subscribe(
       compareBy => {
-        this.calculateScore(compareBy);
+        if (!compareBy.compareByBlog && !compareBy.compareByCompany && !compareBy.compareByFollowers && !compareBy.compareByGists && !compareBy.compareByRepos && !compareBy.compareByVechime) {
+          this.hasError = true;
+          this.error = 'Didnt select any comparison options';
+        } else
+          this.calculateScore(compareBy);
       }
     );
   }
 
 
 
-  calculateScore(compareBy: fromBattle.BattleState): void {
-    if (compareBy == null) {
-      this.hasError = true;
-      setTimeout(() => {
-        this.router.navigate(['/battle']);
-      }, 3000);
-    }
+  calculateScore(compareBy: battleState.IBattleState): void {
     if (compareBy.compareByRepos) {
       let totalNumberOfRepos = this.firstProfile.profile.public_repos + this.secondProfile.profile.public_repos;
       totalNumberOfRepos = totalNumberOfRepos > 0 ? totalNumberOfRepos : 1;
@@ -184,7 +207,12 @@ export class ProfileComponent implements OnInit {
         }
       }
     });
+    this.profileStore.dispatch(new profileActions.ResetProfiles);
   }
 
+  goBack() {
+    this.profileStore.dispatch(new profileActions.ResetProfiles);
+    this.router.navigate(['battle']);
+  }
 
 }

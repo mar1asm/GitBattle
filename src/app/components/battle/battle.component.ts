@@ -2,8 +2,9 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
-import * as fromBattle from './state/battle.reducer';
-import * as battleActions from './state/battle.actions';
+import * as battleState from '../../store/state/battle.state';
+import * as battleActions from '../../store/actions/battle.actions';
+import * as battleSelectors from '../../store/selectors/battle.selectors';
 
 @Component({
   selector: 'app-battle',
@@ -21,12 +22,12 @@ export class BattleComponent implements AfterViewInit, OnInit {
   filtersName:string[]=['compareByRepos'];
 
   constructor(private router: Router,
-              private store: Store<fromBattle.State>,
+              private store: Store<battleState.BattleState>,
               private cdr: ChangeDetectorRef) { }
   
 
   ngOnInit(): void {
-    this.store.pipe(select(fromBattle.getBattleState)).subscribe(
+    this.store.pipe(select(battleSelectors.getBattleState)).subscribe(
       compareBy => {
         let i=0;
         for (let com in compareBy){

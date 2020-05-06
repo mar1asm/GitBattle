@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
-import * as fromTop from './state/top.reducer';
-import * as topActions from './state/top.actions';
+import * as topSelectors from '../../store/selectors/top.selectors';
+import * as topState from '../../store/state/top.state'
+import * as topActions from '../../store/actions/top.actions';
 import { TopService } from '../../services/top.service';
-import { IProfile } from '../profile/profile';
+import { IProfile } from '../profile/Iprofile';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
@@ -25,11 +26,11 @@ export class TopComponent implements OnInit {
 
   languages = ['Any', 'JavaScript', 'Java', 'Python', 'HTML', 'C%2B%2B', 'C%23', 'PHP', 'Ruby', 'C', 'CSS'];
 
-  constructor(private store: Store<fromTop.State>,
+  constructor(private store: Store<topState.State>,
     private topService: TopService) { }
 
   ngOnInit(): void {
-    this.store.pipe(select(fromTop.getTopState)).subscribe(
+    this.store.pipe(select(topSelectors.getTopState)).subscribe(
       compareBy => {
         this.compareBy = compareBy.sortBy;
         this.compareByLanguage = compareBy.sortByLanguage;
