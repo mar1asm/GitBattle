@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AboutComponent } from './components/about/about.component';
 import { BattleRoutingModule } from './components/battle/battle.routing.module';
 
 
@@ -18,9 +17,6 @@ const routes: Routes = [
   {
     path:'battle', 
     loadChildren: ()=>import('./components/battle/battle.module').then(m=>m.BattleModule)
-  },
-  {
-    path:'about', component: AboutComponent
   },
   {
     path: '', redirectTo: 'home', pathMatch: 'full'

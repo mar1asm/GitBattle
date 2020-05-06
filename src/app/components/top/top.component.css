@@ -10,20 +10,17 @@
 .menu{
     padding-top: 10vh;
     padding-left: 3vw;
+    font-size: 3vmin;
     position: fixed;
     width: 25%;
     background-color: whitesmoke;
     height: 100%;
 }
 
-.column{
-    display: inline-flex;
-    justify-content: right;
-}
 
 img {
-    height:100%;
-    width: 90%;
+    height:auto;
+    width: 75%;
 }
 
 .languages{
@@ -33,17 +30,28 @@ img {
 .profiles{
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 30vh;
+    height: 30vmin;
     padding-top: 2vh;
 }
 
 .title{
     padding: 5vh;
     text-align: center;
+    font-size: 4vmin;
 }
 
 .col{
     height: 100%;
 }
+
+.index{
+    padding-top: 10vmin;
+    font-size: 5vmin;
+    font-weight: bold;
+}
+
+.col-8{
+    font-size: 3vmin;
+}
+
 

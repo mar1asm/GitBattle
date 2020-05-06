@@ -14,8 +14,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { environment } from 'src/environments/environment';
-import { AboutComponent } from './components/about/about.component';
+import { environment } from '../environments/environment';
 
 
 
@@ -24,8 +23,7 @@ import { AboutComponent } from './components/about/about.component';
     AppComponent,
     HomeComponent,
     PageNotFoundComponent,
-    ProfileComponent,
-    AboutComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
