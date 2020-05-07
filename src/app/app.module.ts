@@ -16,6 +16,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 
+import { AngularFireModule } from "@angular/fire";
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { EffectsModule } from '@ngrx/effects';
     PageNotFoundComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     BrowserModule,
