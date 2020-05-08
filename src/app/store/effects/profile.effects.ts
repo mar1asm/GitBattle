@@ -4,7 +4,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import * as profileActions from '../actions/profile.actions'
 import * as fromService from '../../services/profile.service';
 import { map, mergeMap, catchError } from 'rxjs/operators';
-import { IProfile } from '../../components/profile/IProfile';
+import { IProfile } from '../../profile/IProfile';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 

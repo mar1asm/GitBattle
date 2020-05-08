@@ -1,5 +1,5 @@
 <div class="container-fluid w-100">
-    <div class="row central" *ngIf="!loading && !hasError">
+    <div class="row central" *ngIf="!hasError && loaded">
         <div *ngFor="let profile of profiles; index as i" class="col-5 {{winner==i}}">
             <div class="row title">
                 {{profile.login}}({{profile.name? profile.name: '-'}})
@@ -10,7 +10,7 @@
                     <img src="{{profile.avatar_url}}" class="img-fluid float-left img-thumbnail" alt="Profile Img">
                 </div>
                 <div class="col-8">
-                    <a href="{{profile.html_url}}">Go to the Github profile</a> <br>
+                    <a href="{{profile.html_url}}" target="_blank">Go to the Github profile</a> <br>
                     Number of repos: {{profile.public_repos}} <br>
                     Number of gists: {{profile.public_gists}} <br>
                     Number of followers: {{profile.followers}} <br>
@@ -24,7 +24,7 @@
     </div>
     <div *ngIf="!hasError" class="scores"> Final scores: {{firstProfile.score| number: "1.0-0"}}:
         {{secondProfile.score |number: "1.0-0"}}</div>
-    <div class="chart">
+    <div class="chart" *ngIf="chart">
         <canvas id="myChart"></canvas>
     </div>
 
@@ -33,5 +33,9 @@
         <button class="btn btn-primary" (click)="goBack()">
             Go back
         </button>
+    </div>
+
+    <div *ngIf="!loaded &&!hasError">
+        <app-loading></app-loading>
     </div>
 </div>

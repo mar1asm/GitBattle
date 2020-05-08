@@ -1,8 +1,7 @@
-import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { IUser } from '../components/home/home.component';
+import { IProfile } from '../profile/IProfile';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +9,7 @@ import { IUser } from '../components/home/home.component';
 export class HomeService {
     ref: any;
     constructor(private database: AngularFirestore) {
-        this.ref = database.collection("Users");
+        this.ref = database.collection("Profiles");
     }
 
 
@@ -18,17 +17,17 @@ export class HomeService {
         return this.ref.snapshotChanges();
     }
 
-    addUser(user) {
-        this.database.collection("Users").doc(user).set({ login: user, count: 1 });
+    addUser(profile: IProfile) {
+        this.ref.doc(profile.login).set({ login: profile.login,name: profile.name, image: profile.avatar_url, profileLink:profile.html_url, count: 1 });
     }
 
-    updateUser(user: string) {
-        let docRef = this.ref.doc(user);
+    updateUser(profile: IProfile) {
+        let docRef = this.ref.doc(profile.login);
 
-        const sub= this.database.collection("Users", ref => ref.where('login', "==", user)).snapshotChanges().subscribe(res => {
+        const sub= this.database.collection("Profiles", ref => ref.where('login', "==", profile.login)).snapshotChanges().subscribe(res => {
             sub.unsubscribe();
             if (res.length == 0) {
-                this.addUser(user);
+                this.addUser(profile);
             } else {
                 return docRef.update({ count: firebase.firestore.FieldValue.increment(1) });
             }

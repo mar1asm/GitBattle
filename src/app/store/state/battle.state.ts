@@ -10,7 +10,7 @@ export interface IBattleState{
     compareByBlog: boolean;
     compareByFollowers: boolean;
     compareByCompany: boolean;
-    compareByVechime: boolean;
+    compareByDate: boolean;
 }
 
 export const initialBattleState: IBattleState ={
@@ -19,5 +19,5 @@ export const initialBattleState: IBattleState ={
     compareByBlog: true,
     compareByFollowers: true,
     compareByCompany:true,
-    compareByVechime:true
+    compareByDate:true
 };

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IProfile } from '../../components/profile/IProfile';
+import { IProfile } from '../../profile/IProfile';
 
 export enum ProfileActionTypes{
     SetFirstProfile='[Profile] Set First Profile',

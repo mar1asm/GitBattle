@@ -41,27 +41,27 @@ label.sm{
 
 input{
     padding: 3vmin;
-    font-size: 3.5vmin;
+    font-size: 3vmin;
 }
 
 form{
-    padding: 5vmin;
+    padding-top: 5vmin;
+    padding-bottom: 5vmin;
 }
 
 button{
     font-size: 2.5vmin;
 }
 
- .info {
+.info {
     position: relative;
-    display: inline-block;
     font-size: 4vmin;
     font-weight: bold;
     color: grey;
     float: right;
-  }
+}
   
-  .info .infoText {
+.info .infoText {
     visibility: hidden;
     width: 50vw;
     background-color: #555;
@@ -72,17 +72,17 @@ button{
     border-radius: 6px;
     position: absolute;
     z-index: 1;
-    top:125%;
+    bottom:125%;
     right: 100%;
     opacity: 0;
     transition: opacity 0.3s;
-  }
+}
   
   
-  .info:hover .infoText {
+.info:hover .infoText {
     visibility: visible;
     opacity: 1;
-  } 
+} 
 
 
 

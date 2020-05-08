@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IProfile } from '../components/profile/IProfile';
+import { IProfile } from '../profile/IProfile';
 import { HttpClient } from '@angular/common/http';
 import { ProfileService } from './profile.service';
 
@@ -22,29 +22,28 @@ export class TopService {
   topProfiles: ITopProfiles;
 
   constructor(private http: HttpClient,
-              private profileService: ProfileService) {
+    private profileService: ProfileService) {
     this.topProfiles = null;
   }
 
-  searchTopData(query: string, language: string) {
+  searchTopData(q: string, language: string) {
 
-    let sortBy=query=='repos'? 'repositories': 'followers';
-    if (language!='Any') {
+    let sortBy = q == 'repos' ? 'repositories' : 'followers';
+    if (language != 'Any') {
       this.apiUrl = `${this.apiRoot}q=language:${language}+sort:${sortBy}&${this.clientId}&${this.clientSecret}&per_page=100`;
     }
     else {
-      this.apiUrl = `${this.apiRoot}q=${query}:%3E10+sort:${sortBy}&${this.clientId}&${this.clientSecret}&per_page=100`;
+      this.apiUrl = `${this.apiRoot}q=${q}:%3E10+sort:${sortBy}&${this.clientId}&${this.clientSecret}&per_page=100`;
     }
     let promise = new Promise((resolve, reject) => {
       this.http.get(this.apiUrl).toPromise().then(
         (res: ITopProfiles) => {
-          this.topProfiles=res;
-          for (let i=0; i<100; i++){
-            //this.profileService.searchProfile(res.items[i].login).then(
-            //  ()=>{
-            //this.topProfiles.items[i]=this.profileService.getProfileData();
-          //});
-        }
+          this.topProfiles = res;
+          for (let i = 0; i < 100; i++) {  
+            this.profileService.getProfileData(res.items[i].login).subscribe(v => {
+              this.topProfiles.items[i] = v;
+            });
+          }
           resolve();
         },
         msg => {
@@ -55,7 +54,7 @@ export class TopService {
     return promise;
   }
 
-  getTopData(): IProfile[]{
+  getTopData(): IProfile[] {
     if (this.topProfiles.items)
       return this.topProfiles.items; else
       return null;

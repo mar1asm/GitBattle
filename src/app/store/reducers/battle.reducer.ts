@@ -33,10 +33,10 @@ export function reducer(state=initialBattleState, action:BattleActions): IBattle
                 ...state,
                 compareByCompany: action.payload
             };
-        case BattleActionTypes.CompareByVechime:
+        case BattleActionTypes.CompareByDate:
             return {
                 ...state,
-                compareByVechime: action.payload
+                compareByDate: action.payload
             };
 
         default:

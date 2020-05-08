@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IProfile } from '../components/profile/IProfile';
+import { IProfile } from '../profile/IProfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,13 +12,8 @@ export class ProfileService {
   private clientSecret='1b96319ce0f9d74ebc236eab5e1b3640b54ed1f7';
 
   private apiRoot: string = 'https://api.github.com/users/';
-  private loading: boolean;
-  private profile: IProfile;
 
-  constructor(private http: HttpClient) {
-    this.loading = false;
-    this.profile = null;
-  }
+  constructor(private http: HttpClient) { }
 
 
   getProfileData(username: string): Observable<IProfile>{

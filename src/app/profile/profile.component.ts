@@ -1,19 +1,19 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { IProfile } from './IProfile';
-import { ProfileService } from '../../services/profile.service';
+import { ProfileService } from '../services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
-import { Chart } from '../../../../node_modules/chart.js';
+import { Chart } from 'chart.js';
 
-import * as battleState from '../../store/state/battle.state';
-import * as battleSelectors from '../../store/selectors/battle.selectors';
-import * as profileSelectors from '../../store/selectors/profile.selectors';
-import * as profileState from '../../store/state/profile.state';
-import * as profileActions from '../../store/actions/profile.actions';
+import * as battleState from '../store/state/battle.state';
+import * as battleSelectors from '../store/selectors/battle.selectors';
+import * as profileSelectors from '../store/selectors/profile.selectors';
+import * as profileState from '../store/state/profile.state';
+import * as profileActions from '../store/actions/profile.actions';
+import { HomeService } from '../services/home.service';
 
 @Component({
-  selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -43,7 +43,10 @@ export class ProfileComponent implements OnInit {
   profiles: IProfile[] = [];
   criteria: string[] = [];
 
+  chart = false;
+
   constructor(private profileService: ProfileService,
+    private homeService: HomeService,
     private route: ActivatedRoute,
     private battleStore: Store<battleState.BattleState>,
     private profileStore: Store<profileState.ProfileState>,
@@ -74,7 +77,12 @@ export class ProfileComponent implements OnInit {
     );
 
     const errorSub = this.profileStore.pipe(select(profileSelectors.getError)).subscribe(
-      error => { if (error) { this.error = 'Profile Not Found'; this.hasError = true } }
+      error => {
+        if (error) {
+          this.error = 'Profile Not Found';
+          this.hasError = true;
+        }
+      }
     );
 
     const loadedSub = this.profileStore.pipe(select(profileSelectors.haveLoaded)).subscribe(
@@ -84,8 +92,8 @@ export class ProfileComponent implements OnInit {
           this.loaded = true;
           firstProfileSubscription.unsubscribe();
           secondProfileSubscription.unsubscribe();
+          errorSub.unsubscribe();
           this.profiles.push(this.firstProfile.profile, this.secondProfile.profile);
-          console.log(this.profiles);
           this.getComparisonOptions();
         }
 
@@ -96,15 +104,16 @@ export class ProfileComponent implements OnInit {
   }
 
   getComparisonOptions() {
-    this.battleStore.pipe(select(battleSelectors.getBattleState)).subscribe(
+    let compareSub=this.battleStore.pipe(select(battleSelectors.getBattleState)).subscribe(
       compareBy => {
-        if (!compareBy.compareByBlog && !compareBy.compareByCompany && !compareBy.compareByFollowers && !compareBy.compareByGists && !compareBy.compareByRepos && !compareBy.compareByVechime) {
+        if (!compareBy.compareByBlog && !compareBy.compareByCompany && !compareBy.compareByFollowers && !compareBy.compareByGists && !compareBy.compareByRepos && !compareBy.compareByDate) {
           this.hasError = true;
           this.error = 'Didnt select any comparison options';
         } else
           this.calculateScore(compareBy);
       }
     );
+    compareSub.unsubscribe();
   }
 
 
@@ -119,6 +128,7 @@ export class ProfileComponent implements OnInit {
 
       this.firstProfile.values.push(this.firstProfile.profile.public_repos);
       this.secondProfile.values.push(this.secondProfile.profile.public_repos);
+
 
       this.criteria.push("Number of repos");
     }
@@ -156,15 +166,16 @@ export class ProfileComponent implements OnInit {
       this.firstProfile.score += this.firstProfile.profile.company ? this.secondProfile.profile.company ? 50 : 100 : 0;
       this.secondProfile.score += this.secondProfile.profile.company ? this.firstProfile.profile.company ? 50 : 100 : 0;
     }
-    if (compareBy.compareByVechime) {
+
+    if (compareBy.compareByDate) {
       let month = 60 * 60 * 24 * 365 / 12 * 1000;
       let today = new Date();
       let firstProfileMonthsActive = (today.valueOf() - Date.parse(this.firstProfile.profile.created_at)) / month;
       let secondProfileMonthsActive = (today.valueOf() - Date.parse(this.secondProfile.profile.created_at)) / month;
       let totalMonthsActive = firstProfileMonthsActive + secondProfileMonthsActive;
 
-      this.firstProfile.score += firstProfileMonthsActive / totalMonthsActive;
-      this.secondProfile.score += secondProfileMonthsActive / totalMonthsActive;
+      this.firstProfile.score += firstProfileMonthsActive / totalMonthsActive * 100;
+      this.secondProfile.score += secondProfileMonthsActive / totalMonthsActive * 100;
 
       this.firstProfile.values.push(firstProfileMonthsActive);
       this.secondProfile.values.push(secondProfileMonthsActive);
@@ -174,7 +185,17 @@ export class ProfileComponent implements OnInit {
     if (this.firstProfile.score > this.secondProfile.score)
       this.winner = 0; else
       this.winner = 1;
-    this.doChart();
+    this.update();
+  }
+
+  update() {
+    this.homeService.updateUser(this.firstProfile.profile);
+    this.homeService.updateUser(this.secondProfile.profile);
+    this.profileStore.dispatch(new profileActions.ResetProfiles);
+
+    this.chart = this.criteria.length > 1 ? true : false;
+    if (this.chart)
+      this.doChart();
   }
 
   doChart() {
@@ -193,6 +214,7 @@ export class ProfileComponent implements OnInit {
         }
       ]
     };
+    this.cdr.detectChanges();
     var myChart = new Chart("myChart", {
       type: 'bar',
       data: data,
@@ -207,7 +229,6 @@ export class ProfileComponent implements OnInit {
         }
       }
     });
-    this.profileStore.dispatch(new profileActions.ResetProfiles);
   }
 
   goBack() {
