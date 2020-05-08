@@ -17,7 +17,8 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AngularFireModule } from "@angular/fire";
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { HomeService } from './services/home.service';
 
 
 @NgModule({
@@ -27,8 +28,8 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
     PageNotFoundComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     BrowserModule,
@@ -41,7 +42,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
       logOnly: environment.production
     })
   ],
-  providers: [ProfileService],
+  providers: [ProfileService, HomeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -47,7 +47,7 @@ export class BattleComponent implements AfterViewInit, OnInit {
 
     if (this._username1 && this._username2)
       {
-        this.router.navigate(['/profiles'],
+        this.router.navigate(['battle/profiles'],
         {
           queryParams:{p1: this._username1, p2: this._username2}
         });
