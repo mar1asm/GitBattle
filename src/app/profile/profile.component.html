@@ -1,6 +1,6 @@
 <div class="container-fluid w-100">
     <div class="row central" *ngIf="!hasError && loaded">
-        <div *ngFor="let profile of profiles; index as i" class="col-5 {{winner==i}}">
+        <div *ngFor="let profile of profiles; index as i" class="col-5 {{winner==i || winner==-1}}">
             <div class="row title">
                 {{profile.login}}({{profile.name? profile.name: '-'}})
                 <div class="winner" *ngIf="winner==i">WINNER</div>

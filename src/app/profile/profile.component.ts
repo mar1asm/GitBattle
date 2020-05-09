@@ -104,11 +104,11 @@ export class ProfileComponent implements OnInit {
   }
 
   getComparisonOptions() {
-    let compareSub=this.battleStore.pipe(select(battleSelectors.getBattleState)).subscribe(
+    let compareSub = this.battleStore.pipe(select(battleSelectors.getBattleState)).subscribe(
       compareBy => {
         if (!compareBy.compareByBlog && !compareBy.compareByCompany && !compareBy.compareByFollowers && !compareBy.compareByGists && !compareBy.compareByRepos && !compareBy.compareByDate) {
           this.hasError = true;
-          this.error = 'Didnt select any comparison options';
+          this.error = 'Didnt select any comparison option';
         } else
           this.calculateScore(compareBy);
       }
@@ -182,9 +182,7 @@ export class ProfileComponent implements OnInit {
 
       this.criteria.push("Number of active months");
     }
-    if (this.firstProfile.score > this.secondProfile.score)
-      this.winner = 0; else
-      this.winner = 1;
+    this.winner = this.firstProfile.score > this.secondProfile.score ? 0 : this.firstProfile.score == this.secondProfile.score ? -1 : 1
     this.update();
   }
 
@@ -204,12 +202,12 @@ export class ProfileComponent implements OnInit {
       datasets: [
         {
           label: this.firstProfile.name,
-          backgroundColor: this.firstProfile.score > this.secondProfile.score ? "green" : "red",
+          backgroundColor: this.firstProfile.score > this.secondProfile.score ? "green" : this.firstProfile.score == this.secondProfile.score ? "blue" : "red",
           data: this.firstProfile.values
         },
         {
           label: this.secondProfile.name,
-          backgroundColor: this.secondProfile.score > this.firstProfile.score ? "green" : "red",
+          backgroundColor: this.secondProfile.score > this.firstProfile.score ? "green" : this.firstProfile.score == this.secondProfile.score ? "yellow" : "red",
           data: this.secondProfile.values
         }
       ]
