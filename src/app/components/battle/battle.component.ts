@@ -2,9 +2,9 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
-import * as battleState from '../store/state/battle.state';
-import * as battleActions from '../store/actions/battle.actions';
-import * as battleSelectors from '../store/selectors/battle.selectors';
+import * as battleState from '../../store/state/battle.state';
+import * as battleActions from '../../store/actions/battle.actions';
+import * as battleSelectors from '../../store/selectors/battle.selectors';
 
 @Component({
   templateUrl: './battle.component.html',
@@ -16,9 +16,8 @@ export class BattleComponent implements AfterViewInit, OnInit {
   _username2=''; 
   ready: boolean=false;
 
-  compareBy:string[]=['repos','gists','blog','followers', 'company', 'creation date'];
-  bCompareBy:boolean[]=[true, true, true, true, true, true]; 
-  filtersName:string[]=['compareByRepos'];
+  compareBy:string[]=['Repos','Gists','Blog','Followers', 'Company', 'Date Created'];
+  bCompareBy:boolean[]=[true, true, true, true, true, true, true]; 
 
   constructor(private router: Router,
               private store: Store<battleState.BattleState>,
@@ -30,7 +29,6 @@ export class BattleComponent implements AfterViewInit, OnInit {
       compareBy => {
         let i=0;
         for (let com in compareBy){
-          console.log(com, i);
           this.bCompareBy[i++]=compareBy[com];
         }
       });

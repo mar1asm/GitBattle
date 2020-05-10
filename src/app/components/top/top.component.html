@@ -16,8 +16,8 @@
         Language:
     </div>
     <label *ngFor="let language of languages" class="languages">
-        <input type="radio" name="Language" value="language"
-            (click)="filterChecked($event.target.name, language)" [checked]="language==compareByLanguage">
+        <input type="radio" name="Language" value="language" (click)="filterChecked($event.target.name, language)"
+            [checked]="language==compareByLanguage">
         {{language=='C%2B%2B'? 'C++':language=='C%23'? 'C#': language}}
     </label>
 </div>
@@ -25,7 +25,7 @@
 
 <cdk-virtual-scroll-viewport itemSize="200" class="container-fluid h-100">
     <div class="title">
-        Top 100 github profiles
+        Top 100 GitHub profiles
     </div>
     <div class="loading" *ngIf="loading">
         <app-loading></app-loading>
@@ -38,11 +38,11 @@
             <img src={{topProfile.avatar_url}} />
         </div>
         <div class="col-8">
-            Name: {{topProfile.login}}({{topProfiles[i].name}}) <br> 
-            Repos: {{topProfiles[i].public_repos}} <br> 
+            Name: {{topProfile.login}}({{topProfiles[i].name}}) <br>
+            Repos: {{topProfiles[i].public_repos}} <br>
             Followers: {{topProfiles[i].followers}} <br>
             Active since: {{topProfiles[i].created_at | date: 'dd/MM/yyyy'}} <br>
-            <a href={{topProfiles[i].html_url}} target="_blank">Go to the Github profile</a>
+            <a href={{topProfiles[i].html_url}} target="_blank">Go to the GitHub profile</a>
         </div>
     </div>
 </cdk-virtual-scroll-viewport>

@@ -11,8 +11,8 @@ import { HttpClientModule} from '@angular/common/http';
 
 /* components */
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 

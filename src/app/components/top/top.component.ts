@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
-import * as topSelectors from '../store/selectors/top.selectors';
-import * as topState from '../store/state/top.state'
-import * as topActions from '../store/actions/top.actions';
-import { TopService } from '../services/top.service';
-import { IProfile } from '../profile/Iprofile';
+import * as topSelectors from '../../store/selectors/top.selectors';
+import * as topState from '../../store/state/top.state'
+import * as topActions from '../../store/actions/top.actions';
+import { TopService } from '../../services/top.service';
+import { IProfile } from '../../shared/IProfile';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
-  selector: 'app-top',
   templateUrl: './top.component.html',
   styleUrls: ['./top.component.css']
 })
@@ -17,11 +16,11 @@ export class TopComponent implements OnInit {
 
   compareBy: string;
   compareByLanguage: string;
-  loading=false;
+  loading = false;
 
   topProfiles: IProfile[] = [];
-  
-  
+
+
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
 
@@ -33,14 +32,14 @@ export class TopComponent implements OnInit {
   ngOnInit(): void {
     this.store.pipe(select(topSelectors.getTopState)).subscribe(
       compareBy => {
-        this.loading=true;
+        this.loading = true;
         this.compareBy = compareBy.sortBy;
         this.compareByLanguage = compareBy.sortByLanguage;
         this.topService.searchTopData(this.compareBy, this.compareByLanguage).then(() => {
           this.topProfiles = this.topService.getTopData();
           this.viewport.scrollToIndex(0);
           setTimeout(() => {
-            this.loading=false;
+            this.loading = false;
           }, 1000);
         });
       });

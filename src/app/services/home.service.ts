@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { IProfile } from '../profile/IProfile';
+import { IProfile } from '../shared/IProfile';
 
 @Injectable({
     providedIn: 'root'
@@ -18,13 +18,13 @@ export class HomeService {
     }
 
     addUser(profile: IProfile) {
-        this.ref.doc(profile.login).set({ login: profile.login,name: profile.name, image: profile.avatar_url, profileLink:profile.html_url, count: 1 });
+        this.ref.doc(profile.login).set({ login: profile.login, name: profile.name, image: profile.avatar_url, profileLink: profile.html_url, count: 1 });
     }
 
     updateUser(profile: IProfile) {
         let docRef = this.ref.doc(profile.login);
 
-        const sub= this.database.collection("Profiles", ref => ref.where('login', "==", profile.login)).snapshotChanges().subscribe(res => {
+        const sub = this.database.collection("Profiles", ref => ref.where('login', "==", profile.login)).snapshotChanges().subscribe(res => {
             sub.unsubscribe();
             if (res.length == 0) {
                 this.addUser(profile);

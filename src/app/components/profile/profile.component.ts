@@ -1,17 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { IProfile } from './IProfile';
-import { ProfileService } from '../services/profile.service';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { IProfile } from '../../shared/IProfile';
+import { ProfileService } from '../../services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
 import { Chart } from 'chart.js';
 
-import * as battleState from '../store/state/battle.state';
-import * as battleSelectors from '../store/selectors/battle.selectors';
-import * as profileSelectors from '../store/selectors/profile.selectors';
-import * as profileState from '../store/state/profile.state';
-import * as profileActions from '../store/actions/profile.actions';
-import { HomeService } from '../services/home.service';
+import * as battleState from '../../store/state/battle.state';
+import * as battleSelectors from '../../store/selectors/battle.selectors';
+import * as profileSelectors from '../../store/selectors/profile.selectors';
+import * as profileState from '../../store/state/profile.state';
+import * as profileActions from '../../store/actions/profile.actions';
+
+import { HomeService } from '../../services/home.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -108,7 +109,7 @@ export class ProfileComponent implements OnInit {
       compareBy => {
         if (!compareBy.compareByBlog && !compareBy.compareByCompany && !compareBy.compareByFollowers && !compareBy.compareByGists && !compareBy.compareByRepos && !compareBy.compareByDate) {
           this.hasError = true;
-          this.error = 'Didnt select any comparison option';
+          this.error = 'No comparison option selected';
         } else
           this.calculateScore(compareBy);
       }

@@ -6,13 +6,8 @@
     float: right;
 }
 
-.menuOption{
-  font-weight: bold;
-}
-
-
 .menu{
-    padding-top: 10vh;
+    padding-top: 5vh;
     padding-left: 3vw;
     font-size: 3vmin;
     position: fixed;
@@ -21,6 +16,10 @@
     height: 100%;
 }
 
+
+.menuOption{
+    font-weight: bold;
+}
 
 img {
     height:auto;
@@ -45,9 +44,6 @@ img {
     font-size: 4vmin;
 }
 
-.col{
-    height: 100%;
-}
 
 .index{
     padding-top: 10vmin;
@@ -56,7 +52,7 @@ img {
 }
 
 .col-8{
-    font-size: 3vmin;
+    font-size: 2.5vmin;
 }
 
 .loading{

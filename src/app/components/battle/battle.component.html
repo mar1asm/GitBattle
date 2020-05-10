@@ -4,22 +4,20 @@
   <div class="form-group checkbox" *ngIf="ready">
     <div class="compare">Compare by: </div>
     <div class="checkboxes">
-    <label *ngFor="let compare of compareBy; let i=index" class="sm">
-      <input type="checkbox" [checked]="bCompareBy[i]" (click)="filterChecked(i, $event.target.checked)">
-      {{compare}}
-    </label>
-  </div>
+      <label *ngFor="let compare of compareBy; let i=index">
+        <input type="checkbox" [checked]="bCompareBy[i]" (click)="filterChecked(i, $event.target.checked)">
+        {{compare}}
+      </label>
+    </div>
   </div>
 
 
   <div class="container">
     <form class="form-inline justify-content-center">
       <div class="form-inline">
-        <input #username1 class="form-control mx-sm-2 border border-dark" type="text"
-          placeholder="Profile 1" required>
-        <div class=" versus">VS</div>
-        <input #username2 class="form-control mx-sm-2 border border-dark" type="text"
-          placeholder="Profile 2" required>
+        <input #username1 class="form-control border border-dark" type="text" placeholder="Profile 1" required>
+        <div class="versus">VS</div>
+        <input #username2 class="form-control border border-dark" type="text" placeholder="Profile 2" required>
       </div>
     </form>
     <div class="row justify-content-center">
@@ -28,8 +26,6 @@
         Submit</button>
     </div>
   </div>
-  <div class="info">?
-    <span class="infoText"></span>
-  </div> 
+
 
 </div>

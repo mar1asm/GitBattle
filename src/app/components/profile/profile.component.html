@@ -20,16 +20,20 @@
                 </div>
             </div>
         </div>
-
     </div>
+
     <div *ngIf="!hasError" class="scores"> Final scores: {{firstProfile.score| number: "1.0-0"}}:
         {{secondProfile.score |number: "1.0-0"}}</div>
+
     <div class="chart" *ngIf="chart">
         <canvas id="myChart"></canvas>
     </div>
+    <div class="info">?
+        <span class="infoText">The scores are calculated by converting the </span>
+    </div> 
 
-    <div *ngIf="hasError">
-        {{error}}
+    <div *ngIf="hasError" class="error">
+        {{error}} <br>
         <button class="btn btn-primary" (click)="goBack()">
             Go back
         </button>

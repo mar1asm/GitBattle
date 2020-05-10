@@ -1,4 +1,4 @@
-import { IProfile } from '../../profile/IProfile';
+import { IProfile } from '../../shared/IProfile';
 import * as fromRoot from './app.state';
 
 export interface ProfileState extends fromRoot.State{
